@@ -1,0 +1,54 @@
+<%- include('base', {
+    pageTitle: 'Modifier',
+    mainTitle: 'La page de modification'
+}); %>
+
+<form class = "container" method ="POST" action="/donnees/modification/<%= fuelData._id %>" >
+
+        <div class="mb-3">
+        <label for="Jour" class="form-label">Jour</label>
+        <input  class="form-control" id="jourid" name="journame" value="<%= fuelData.day %>">
+        </div>
+        <div class="mb-3">
+        <label for="Heure" class="form-label">Heure</label>
+        <input  class="form-control" id="Heureid" name="Heurename" value="<%= fuelData.hours %> ">
+        </div>
+
+        <div class="mb-3">
+        <label for="Charbon" class="form-label">Charbon</label>
+        <input  class="form-control" id="Charbonid" name="Charbonname"value="<%= fuelData.dayAheadGenerationSchedule_CP %> "  >
+        </div>
+
+        <div class="mb-3">
+        <label for="Fioul" class="form-label">Fioul</label>
+        <input  class="form-control" id="Fioulid" name="Fioulname" value="<%= fuelData.dayAheadGenerationSchedule_LF %> ">
+        </div>
+
+        <div class="mb-3">
+        <label for="Gaz" class="form-label">Gaz Naturel</label>
+        <input  class="form-control" id="Gazid" name="Gazname" value="<%= fuelData.dayAheadGenerationSchedule_NG %> ">
+        </div>
+
+        <div class="mb-3">
+        <label for="Nuclear" class="form-label">Nucléaire</label>
+        <input  class="form-control" id="Nuclearid" name="Nuclearname" value="<%= fuelData.dayAheadGenerationSchedule_NU%> ">
+        </div>
+
+        <div class="mb-3">
+            <label for="Nuclear" class="form-label">Other</label>
+            <input  class="form-control" id="Otherid" name="Othername" value="<%= fuelData.dayAheadGenerationSchedule_Other%> ">
+            </div>
+
+        <div class="mb-3">
+        <label for="Eolienne" class="form-label">Eolienne</label>
+        <input  class="form-control" id="Eolienneid" name="Eoliennename" value="<%= fuelData.dayAheadGenerationSchedule_WI%> ">
+        </div>
+
+        <div class="mb-3">
+        <label for="Hydro" class="form-label">Hydroélectrique</label>
+        <input  class="form-control" id="Hydroid" name="Hydroname" value="<%= fuelData.dayAheadGenerationSchedule_WA%> ">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Sauvegarder les modifications</button>
+
+
+</form>

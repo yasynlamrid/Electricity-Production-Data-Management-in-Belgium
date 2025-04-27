@@ -1,0 +1,111 @@
+<%- include('base', {
+    pageTitle: 'Données',
+    mainTitle: 'Energie en Belgique',
+}); %>
+
+<div class="container">
+    <table class="table text-center monTableau" id="tableau">
+        <thead>
+            <tr class="table-dark">
+                <th>Jour</th>
+                <th>Heure</th>
+                <th>Charbon (MW)</th>
+                <th>Fioul (MW)</th>
+                <th>Gaz naturel (MW)</th>
+                <th>Nucléaire (MW)</th>
+                <th>Autres (MW)</th>
+                <th>Énergie éolienne (MW)</th>
+                <th>Énergie hydroélectrique (MW)</th>
+                <th colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% fuelData.forEach(function(data) { %>
+            <tr>
+                <td><%= data.day %></td>
+                <td><%= data.hours %></td>
+                <td><%= data.dayAheadGenerationSchedule_CP %></td>
+                <td><%= data.dayAheadGenerationSchedule_LF %></td>
+                <td><%= data.dayAheadGenerationSchedule_NG %></td>
+                <td><%= data.dayAheadGenerationSchedule_NU %></td>
+                <td><%= data.dayAheadGenerationSchedule_Other %></td>
+                <td><%= data.dayAheadGenerationSchedule_WI %></td>
+                <td><%= data.dayAheadGenerationSchedule_WA %></td>
+                <td><a href="/donnees/modification/<%= data._id %>" class="btn btn-warning">Modifier</a></td>
+                <td><form method="POST" action="/donnees/delete/<%= data._id %>" onsubmit="return confirm('Voulez-vous vraiment supprimer cette ligne ?');">
+                    <button class="btn btn-danger" type="submit">Supprimer</button>
+                </form></td> 
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <nav aria-label="Pagination">
+        <ul class="pagination">
+          <% if(hasPreviousPage) { %>
+            <li class="page-item"><a href="/donnees?page=1" class="page-link">Première</a></li>
+            <li class="page-item"><a href="/donnees?page=<%= previousPage %>" class="page-link">Précédent</a></li>
+          <% } %>
+          
+          <% let i = Math.max(currentPage - 2, 1); %>
+          <% while(i <= Math.min(currentPage + 2, totalPages) && i++) { %>
+            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+              <a href="/donnees?page=<%= i %>" class="page-link"><%= i %></a>
+            </li>
+          <% } %>
+          
+          <% if(hasNextPage) { %>
+            <li class="page-item"><a href="/donnees?page=<%= nextPage %>" class="page-link">Suivant</a></li>
+            <li class="page-item"><a href="/donnees?page=<%= lastPage %>" class="page-link">Dernière</a></li>
+          <% } %>
+        </ul>
+      </nav>
+      
+
+    <button class="btn btn-success w-100" onClick="afficherFormulaire()">Ajouter</button>
+
+    <form id="ajoutForm" class="d-none" method="POST" action="/donnees">  
+        <fieldset>
+            <legend>Ajouter une donnée</legend>
+            <div class="mb-3">
+                <label for="Jour" class="form-label">Jour</label>
+                <input class="form-control" id="jourid" name="journame">
+            </div>
+            <div class="mb-3">
+                <label for="Heure" class="form-label">Heure</label>
+                <input class="form-control" id="Heureid" name="Heurename">
+            </div>
+            <div class="mb-3">
+                <label for="Charbon" class="form-label">Charbon</label>
+                <input class="form-control" id="Charbonid" name="Charbonname">
+            </div>
+            <div class="mb-3">
+                <label for="Fioul" class="form-label">Fioul</label>
+                <input class="form-control" id="Fioulid" name="Fioulname">
+            </div>
+            <div class="mb-3">
+                <label for="Gaz" class="form-label">Gaz Naturel</label>
+                <input class="form-control" id="Gazid" name="Gazname">
+            </div>
+            <div class="mb-3">
+                <label for="Nuclear" class="form-label">Nucléaire</label>
+                <input class="form-control" id="Nuclearid" name="Nuclearname">
+            </div>
+            <div class="mb-3">
+                <label for="Other" class="form-label">Autre</label>
+                <input class="form-control" id="Otherid" name="Othername">
+            </div>
+            <div class="mb-3">
+                <label for="Eolienne" class="form-label">Éolienne</label>
+                <input class="form-control" id="Eolienneid" name="Eoliennename">
+            </div>
+            <div class="mb-3">
+                <label for="Hydro" class="form-label">Hydroélectrique</label>
+                <input class="form-control" id="Hydroid" name="Hydroname">
+            </div>
+            <button class="btn btn-primary" type="submit">Ajouter</button>
+        </fieldset>
+    </form>
+
+    <script src="/javascript/ajoutFuelData.js"></script>
+</div>
